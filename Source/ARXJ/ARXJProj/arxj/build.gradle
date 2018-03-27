@@ -31,7 +31,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:27.0.2'
 }
 
@@ -47,4 +47,15 @@ task jarDebugUnity(type: Jar) {
     from fileTree(dir: 'build/intermediates/classes/debug', excludes: ['**/rendering/*', '**/R$*', '**/assets/*', '**/ARActivity*', '**/R.class', '**/support/*'])
     group 'build'
     archiveName 'arxjUnityDebug.jar'
+}
+
+/**
+ * Zips the needed libraries for the camera calibration app
+ */
+task calibrationAppLibsRelease(type: Zip) {
+    from fileTree(dir: 'build/intermediates/cmake/release/obj')
+    from fileTree(dir: '.externalNativeBuild/cmake/release/arm64-v8a/ARX/AR/include/ARX/AR/', includes: ['config.h'])
+    group 'build'
+    archiveName 'calibrationLibs.zip'
+    println('Zipping')
 }
